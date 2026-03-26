@@ -109,7 +109,7 @@
 
         .menu-column a:hover { color: var(--accent-orange); }
 
-        /* --- ГОРИЗОНТАЛЬНЫЙ ФИЛЬТР (ПОДБОР ПО АВТО) --- */
+        /* --- ФИЛЬТР --- */
         .filter-horizontal {
             background: var(--filter-yellow);
             max-height: 0;
@@ -119,7 +119,7 @@
         }
 
         .filter-horizontal.active {
-            max-height: 250px;
+            max-height: 400px;
             padding: 25px 0;
             border-bottom: 2px solid var(--dark-green);
         }
@@ -134,7 +134,7 @@
             align-items: flex-end;
         }
 
-        .filter-group { display: flex; flex-direction: column; flex: 1; min-width: 150px; }
+        .filter-group { display: flex; flex-direction: column; flex: 1; min-width: 200px; }
         
         .filter-group label {
             font-size: 11px;
@@ -152,9 +152,10 @@
             font-family: inherit;
             background: white;
             cursor: pointer;
+            width: 100%;
         }
 
-        .filter-actions { display: flex; gap: 10px; }
+        .filter-actions { display: flex; gap: 10px; width: 100%; justify-content: flex-end; margin-top: 10px; }
 
         .filter-btn {
             padding: 12px 30px;
@@ -170,7 +171,7 @@
         .btn-search { background: #222; color: white; }
         .btn-reset { background: rgba(0,0,0,0.1); color: #222; }
 
-        /* --- КОНТЕНТ КАТАЛОГА --- */
+        /* --- КОНТЕНТ --- */
         .banner {
             max-width: 1200px;
             margin: 20px auto;
@@ -196,27 +197,31 @@
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .card-header {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 900;
             color: var(--dark-green);
             margin-bottom: 20px;
             border-bottom: 4px solid var(--accent-orange);
             display: inline-block;
+            width: fit-content;
         }
 
-        .product-flex { display: flex; gap: 30px; align-items: center; margin-bottom: 30px; }
+        .product-flex { display: flex; gap: 30px; align-items: center; margin-bottom: 20px; }
         
         .big-preview {
-            width: 180px; height: 180px;
+            width: 120px; height: 120px;
             background: rgba(0,0,0,0.03);
             border-radius: 10px;
-            display: flex; align-items: center; justify-content: center; font-size: 70px;
+            display: flex; align-items: center; justify-content: center; font-size: 50px;
         }
 
-        .specs { list-style: none; padding: 0; font-size: 14px; line-height: 1.8; }
+        .specs { list-style: none; padding: 0; font-size: 13px; line-height: 1.6; }
         .specs li::before { content: "▪ "; color: var(--accent-orange); font-weight: bold; }
 
         .btn-main {
@@ -224,7 +229,9 @@
             color: white; border: none; padding: 15px;
             border-radius: 6px; font-weight: bold; width: 100%;
             text-transform: uppercase; cursor: pointer;
+            transition: 0.3s;
         }
+        .btn-main:hover { opacity: 0.9; transform: translateY(-2px); }
 
         .theme-btn { background: var(--accent-orange); color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; }
 
@@ -244,10 +251,7 @@
     </a>
 
     <nav class="main-nav">
-        <div class="nav-item">
-            <a href="#" class="nav-link">О компании</a>
-        </div>
-
+        <div class="nav-item"><a href="#" class="nav-link">О компании</a></div>
         <div class="nav-item">
             <a href="#" class="nav-link">Продукция ▾</a>
             <div class="mega-menu">
@@ -268,11 +272,9 @@
                 </div>
             </div>
         </div>
-
         <div class="nav-item">
             <a class="nav-link" onclick="toggleFilter()">Подбор по авто 🔍</a>
         </div>
-
         <div class="nav-item">
             <a href="#" class="nav-link">Сервис ▾</a>
             <div class="mega-menu">
@@ -281,7 +283,6 @@
                     <a href="#">Доставка по РФ</a>
                     <a href="#">Способы оплаты</a>
                     <a href="#">Гарантия и возврат</a>
-                    <a href="#">Контакты</a>
                 </div>
             </div>
         </div>
@@ -304,20 +305,15 @@
             </select>
         </div>
         <div class="filter-group">
-            <label>Выбор марки</label>
+            <label>Марка автомобиля</label>
             <select id="brand-select" onchange="updateModels()">
                 <option value="">Выберите марку</option>
-                <option value="audi">Audi</option>
-                <option value="bmw">BMW</option>
-                <option value="mercedes">Mercedes-Benz</option>
-                <option value="toyota">Toyota</option>
-                <option value="porsche">Porsche</option>
-            </select>
+                </select>
         </div>
         <div class="filter-group">
-            <label>Выбор модели</label>
+            <label>Модель</label>
             <select id="model-select">
-                <option value="">Сначала марку</option>
+                <option value="">Сначала выберите марку</option>
             </select>
         </div>
         <div class="filter-group">
@@ -329,12 +325,11 @@
                 <option>2022</option>
                 <option>2021</option>
                 <option>2020</option>
-                <option>2015-2019</option>
-                <option>2010-2014</option>
+                <option>2010-2019</option>
             </select>
         </div>
         <div class="filter-actions">
-            <button class="filter-btn btn-search">Найти</button>
+            <button class="filter-btn btn-search">Применить фильтр</button>
             <button class="filter-btn btn-reset" onclick="toggleFilter()">Закрыть</button>
         </div>
     </div>
@@ -346,87 +341,89 @@
 
 <main class="main-grid">
     <section class="industrial-card">
-        <div class="card-header">Forged Wheels</div>
-        <div class="product-flex">
-            <div class="big-preview">🎡</div>
-            <ul class="specs">
-                <li>Ultra-Lightweight Alloy</li>
-                <li>Exceptional Strength</li>
-                <li>Custom Forged Designs</li>
-                <li>Fitment Guarantee</li>
-            </ul>
+        <div>
+            <div class="card-header">Forged Wheels</div>
+            <div class="product-flex">
+                <div class="big-preview">🎡</div>
+                <ul class="specs">
+                    <li>Ultra-Lightweight Alloy</li>
+                    <li>Exceptional Strength</li>
+                    <li>Custom Forged Designs</li>
+                </ul>
+            </div>
         </div>
-        <button class="btn-main">Перейти в каталог</button>
+        <button class="btn-main">В каталог дисков</button>
     </section>
 
     <section class="industrial-card">
-        <div class="card-header">Wheel Spacers</div>
-        <div class="product-flex">
-            <div class="big-preview">⚙️</div>
-            <ul class="specs">
-                <li>Perfect Stance & Fit</li>
-                <li>Improved Handling</li>
-                <li>Hubcentric Precision</li>
-                <li>7075-T6 Alloy</li>
-            </ul>
+        <div>
+            <div class="card-header">Wheel Spacers</div>
+            <div class="product-flex">
+                <div class="big-preview">⚙️</div>
+                <ul class="specs">
+                    <li>Perfect Stance & Fit</li>
+                    <li>Hubcentric Precision</li>
+                    <li>7075-T6 Alloy</li>
+                </ul>
+            </div>
         </div>
-        <button class="btn-main">Выбрать размеры</button>
+        <button class="btn-main">Выбрать проставки</button>
     </section>
 </main>
 
-<div class="full-width-section" style="max-width:1200px; margin: 0 auto 50px; padding: 0 20px;">
-    <section class="industrial-card">
-        <div class="card-header">Крепеж (Гайки и Болты)</div>
-        <div class="product-flex">
-            <div class="big-preview" style="font-size: 50px;">🔩</div>
-            <div style="flex: 1;">
-                <p>Высокопрочный крепеж класса 10.9 и 12.9. Удлиненные болты для проставок и декоративные гайки для кованых дисков.</p>
-            </div>
-            <button class="btn-main" style="width:auto; padding: 15px 40px;">Весь каталог крепежа</button>
-        </div>
-    </section>
-</div>
-
-<footer style="text-align: center; padding: 40px; color: #888; font-size: 12px; border-top: 1px solid var(--border);">
-    <img src="photo_2026-03-24_02-25-17.jpg" alt="Veltrix" style="height: 30px; opacity: 0.5; margin-bottom: 10px;"><br>
-    © 2026 VELTRIX ENGINEERING.
-</footer>
-
 <script>
-    // Переключение темы
+    // БАЗА ДАННЫХ МАРОК И МОДЕЛЕЙ (БЕЗ ПРОБЕЛОВ В МОДЕЛЯХ)
+    const carData = {
+        'audi': ['50', '80', '90', '100', '200', 'A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'e-tron', 'Q2', 'Q3', 'Q4e-tron', 'Q5', 'Q6e-tron', 'Q7', 'Q8', 'TT', 'R8', 'RS2Avant', 'RS3', 'RS4', 'RS5', 'RS6', 'RS7', 'RSQ3', 'RSQ8', 'S1', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'SQ2', 'SQ5', 'SQ7', 'SQ8'],
+        'bmw': ['1Series', '2Series', '3Series', '4Series', '5Series', '6Series', '7Series', '8Series', 'X1', 'X2', 'X3', 'X4', 'X5', 'X6', 'X7', 'Z1', 'Z3', 'Z4', 'Z8', 'i3', 'i4', 'i5', 'i7', 'i8', 'iX', 'iX1', 'iX2', 'iX3', 'M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M8', 'XM'],
+        'mercedes': ['A-Class', 'B-Class', 'C-Class', 'CL-Class', 'CLA-Class', 'CLC-Class', 'CLK-Class', 'CLS-Class', 'E-Class', 'EQA', 'EQB', 'EQC', 'EQE', 'EQS', 'G-Class', 'GLA-Class', 'GLB-Class', 'GLC-Class', 'GLE-Class', 'GLS-Class', 'ML-Class', 'R-Class', 'S-Class', 'SL-Class', 'SLC', 'SLK-Class', 'SLSAMG', 'AMGGT', 'V-Class', 'X-Class'],
+        'volkswagen': ['Beetle', 'Golf', 'Polo', 'Passat', 'Jetta', 'Scirocco', 'Corrado', 'Phaeton', 'Arteon', 'Lupo', 'Fox', 'Up!', 'Bora', 'Vento', 'ID.3', 'ID.4', 'ID.5', 'ID.6', 'ID.7', 'Touareg', 'Tiguan', 'T-Cross', 'T-Roc', 'Taigo', 'Atlas', 'Touran', 'Sharan', 'Caddy', 'Transporter', 'Multivan', 'Amarok'],
+        'porsche': ['356', '912', '914', '924', '928', '944', '968', '959', '911', 'Boxster', 'Cayman', 'CarreraGT', 'Panamera', 'Macan', 'Cayenne', 'Taycan', '918Spyder'],
+        'toyota': ['Corolla', 'Camry', 'Yaris', 'Prius', 'RAV4', 'Highlander', 'LandCruiser', 'Hilux', 'Tacoma', 'Tundra', 'Supra', '4Runner', 'Avalon', 'Sequoia', 'Sienna', 'C-HR', 'Venza', 'Aygo', 'Crown', 'FJCruiser', 'YarisCross', 'ProAce', 'Mirai', 'LandCruiserPrado', 'Alphard', 'Vellfire'],
+        'lexus': ['IS', 'ES', 'GS', 'LS', 'RC', 'LC', 'NX', 'RX', 'GX', 'LX', 'UX', 'HS', 'CT', 'RCF', 'LC500', 'RXL'],
+        'tesla': ['Roadster', 'ModelS', 'Model3', 'ModelX', 'ModelY', 'Cybertruck', 'Semi'],
+        'hyundai': ['Accent', 'Elantra', 'Sonata', 'Tucson', 'SantaFe', 'Palisade', 'Kona', 'Ioniq5', 'Ioniq6', 'Creta'],
+        'kia': ['Picanto', 'Rio', 'Ceed', 'Cerato', 'K5', 'Stinger', 'Sportage', 'Sorento', 'Carnival', 'EV6', 'EV9']
+    };
+
+    // Инициализация списка брендов при загрузке
+    window.onload = function() {
+        const brandSelect = document.getElementById('brand-select');
+        Object.keys(carData).forEach(brand => {
+            let opt = document.createElement('option');
+            opt.value = brand;
+            opt.innerHTML = brand.charAt(0).toUpperCase() + brand.slice(1);
+            brandSelect.appendChild(opt);
+        });
+    };
+
     function toggleTheme() {
         const body = document.body;
         const current = body.getAttribute('data-theme');
         body.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
     }
 
-    // Показ/скрытие фильтра
     function toggleFilter() {
-        const filterBar = document.getElementById('filter-bar');
-        filterBar.classList.toggle('active');
+        document.getElementById('filter-bar').classList.toggle('active');
     }
 
-    // Динамическое обновление моделей (для примера)
     function updateModels() {
         const brand = document.getElementById('brand-select').value;
         const modelSelect = document.getElementById('model-select');
-        modelSelect.innerHTML = '<option value="">Загрузка...</option>';
+        
+        // Очистка списка
+        modelSelect.innerHTML = '<option value="">Выберите модель</option>';
 
-        const models = {
-            'audi': ['A3', 'A4', 'A6', 'Q5', 'Q7', 'RS6'],
-            'bmw': ['M3', 'M5', 'X5', 'X7', '3-Series', '5-Series'],
-            'mercedes': ['C-Class', 'E-Class', 'S-Class', 'G-Class', 'GLE'],
-            'toyota': ['Camry', 'Land Cruiser', 'RAV4', 'Corolla'],
-            'porsche': ['911', 'Cayenne', 'Panamera', 'Taycan']
-        };
-
-        setTimeout(() => {
-            if (models[brand]) {
-                modelSelect.innerHTML = models[brand].map(m => `<option>${m}</option>`).join('');
-            } else {
-                modelSelect.innerHTML = '<option value="">Модель не найдена</option>';
-            }
-        }, 300);
+        if (brand && carData[brand]) {
+            carData[brand].forEach(model => {
+                let opt = document.createElement('option');
+                opt.value = model;
+                opt.innerHTML = model; // Здесь строки уже без пробелов
+                modelSelect.appendChild(opt);
+            });
+        } else {
+            modelSelect.innerHTML = '<option value="">Сначала выберите марку</option>';
+        }
     }
 </script>
 
