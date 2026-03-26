@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Veltrix Shop</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #efeff4; color: #000; margin: 0; padding: 15px; padding-bottom: 80px; }
+        h2 { text-align: center; color: #333; }
+        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .card { background: white; border-radius: 12px; padding: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; }
+        .card img { width: 100%; border-radius: 8px; margin-bottom: 10px; }
+        .card h3 { font-size: 16px; margin: 5px 0; }
+        .card p { color: #007bff; font-weight: bold; margin: 5px 0; }
+        
+        /* Кнопка купить */
+        .btn-buy { background: #007bff; color: white; border: none; padding: 8px; width: 100%; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .btn-buy:active { transform: scale(0.95); opacity: 0.8; }
+
+        /* Панель корзины внизу */
+        .cart-panel { position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); display: none; justify-content: space-between; align-items: center; border-radius: 15px 15px 0 0; }
+        .btn-checkout { background: #28a745; color: white; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h2>Veltrix Shop</h2>
+    <div class="product-grid" id="catalog"></div>
+
+    <div class="cart-panel" id="cart-panel">
+        <div>
+            <span style="display:block; font-size: 12px; color: #888;">Итого:</span>
+            <b id="total-price">0 ₽</b>
+        </div>
+        <button class="btn-checkout" onclick="checkout()">Оформить заказ</button>
+    </div>
+
+    <script>
+        // Инициализация WebApp
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // Расширяем на все окно
+
+        const products = [
+            {id: 1, name: "Смартфон X", price: 50000, img: "https://via.placeholder.com/150/007bff/ffffff?text=Phone"},
+            {id: 2, name: "Наушники Y", price: 5000, img: "https://via.placeholder.com/150/007bff/ffffff?text=Audio"},
+            {id: 3, name: "Чехол Z", price: 1500, img: "https://via.placeholder.com/150/007bff/ffffff?text=Case"},
+            {id: 4, name: "Часы Pro", price: 12000, img: "https://via.placeholder.com/150/007bff/ffffff?text=Watch"}
+        ];
+
+        let cart = [];
+
+        function renderProducts() {
+            const container = document.getElementById('catalog');
+            products.forEach(p => {
+                container.innerHTML += `
+                    <div class="card">
+                        <img src="${p.img}">
+                        <h3>${p.name}</h3>
+                        <p>${p.price.toLocaleString()} ₽</p>
+                        <button class="btn-buy" onclick="addToCart(${p.id})">В корзину</button>
+                    </div>`;
+            });
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            cart.push(product);
+            updateCartPanel();
+        }
+
+        function updateCartPanel() {
+            const panel = document.getElementById('cart-panel');
+            const totalText = document.getElementById('total-price');
+            
+            if (cart.length > 0) {
+                panel.style.display = 'flex';
+                const total = cart.reduce((sum, p) => sum + p.price, 0);
+                totalText.innerText = total.toLocaleString() + ' ₽';
+            } else {
+                panel.style.display = 'none';
+            }
+        }
+
+        function checkout() {
+            if (cart.length === 0) return;
+            
+            // Собираем данные для бота
+            const orderDetails = cart.map(p => p.name).join(", ");
+            const totalAmount = cart.reduce((sum, p) => sum + p.price, 0);
+            
+            const message = `Заказ: ${orderDetails} на сумму ${totalAmount} ₽`;
+            
+            // ОТПРАВКА ДАННЫХ В БОТ
+            tg.sendData(message); 
+            // Это закроет приложение и отправит текст боту в поле web_app_data
+        }
+
+        renderProducts();
+    </script>
+</body>
+</html>
