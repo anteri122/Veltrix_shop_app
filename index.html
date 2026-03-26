@@ -109,7 +109,7 @@
 
         .menu-column a:hover { color: var(--accent-orange); }
 
-        /* --- ГОРЯЧИЙ ФИЛЬТР (ГОРИЗОНТАЛЬНЫЙ) --- */
+        /* --- ГОРИЗОНТАЛЬНЫЙ ФИЛЬТР (ПОДБОР ПО АВТО) --- */
         .filter-horizontal {
             background: var(--filter-yellow);
             max-height: 0;
@@ -137,7 +137,7 @@
         .filter-group { display: flex; flex-direction: column; flex: 1; min-width: 150px; }
         
         .filter-group label {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 900;
             color: #222;
             margin-bottom: 8px;
@@ -150,7 +150,11 @@
             border-radius: 6px;
             font-size: 14px;
             font-family: inherit;
+            background: white;
+            cursor: pointer;
         }
+
+        .filter-actions { display: flex; gap: 10px; }
 
         .filter-btn {
             padding: 12px 30px;
@@ -160,6 +164,7 @@
             text-transform: uppercase;
             cursor: pointer;
             transition: 0.2s;
+            font-size: 12px;
         }
 
         .btn-search { background: #222; color: white; }
@@ -240,17 +245,26 @@
 
     <nav class="main-nav">
         <div class="nav-item">
+            <a href="#" class="nav-link">О компании</a>
+        </div>
+
+        <div class="nav-item">
             <a href="#" class="nav-link">Продукция ▾</a>
             <div class="mega-menu">
                 <div class="menu-column">
                     <h4>Колеса</h4>
                     <a href="#">Кованые диски Forged</a>
-                    <a href="#">Колпачки</a>
+                    <a href="#">Центральные колпачки</a>
                 </div>
                 <div class="menu-column">
                     <h4>Подвеска</h4>
-                    <a href="#">Проставки</a>
-                    <a href="#">Адаптеры</a>
+                    <a href="#">Колесные проставки</a>
+                    <a href="#">Адаптеры переходные</a>
+                </div>
+                <div class="menu-column">
+                    <h4>Крепеж</h4>
+                    <a href="#">Колесные болты</a>
+                    <a href="#">Колесные гайки</a>
                 </div>
             </div>
         </div>
@@ -260,17 +274,14 @@
         </div>
 
         <div class="nav-item">
-            <a href="#" class="nav-link">О компании</a>
-        </div>
-
-        <div class="nav-item">
             <a href="#" class="nav-link">Сервис ▾</a>
             <div class="mega-menu">
                 <div class="menu-column">
                     <h4>Покупателю</h4>
-                    <a href="#">Доставка</a>
-                    <a href="#">Оплата</a>
-                    <a href="#">Гарантия</a>
+                    <a href="#">Доставка по РФ</a>
+                    <a href="#">Способы оплаты</a>
+                    <a href="#">Гарантия и возврат</a>
+                    <a href="#">Контакты</a>
                 </div>
             </div>
         </div>
@@ -288,25 +299,25 @@
             <label>Категория товаров</label>
             <select>
                 <option>Колесный крепеж</option>
-                <option>Диски Forged</option>
                 <option>Проставки</option>
+                <option>Кованые диски</option>
             </select>
         </div>
         <div class="filter-group">
             <label>Выбор марки</label>
-            <select>
-                <option>Audi</option>
-                <option>BMW</option>
-                <option>Mercedes-Benz</option>
-                <option>Porsche</option>
+            <select id="brand-select" onchange="updateModels()">
+                <option value="">Выберите марку</option>
+                <option value="audi">Audi</option>
+                <option value="bmw">BMW</option>
+                <option value="mercedes">Mercedes-Benz</option>
+                <option value="toyota">Toyota</option>
+                <option value="porsche">Porsche</option>
             </select>
         </div>
         <div class="filter-group">
             <label>Выбор модели</label>
-            <select>
-                <option>A3 / S3</option>
-                <option>A4 / RS4</option>
-                <option>Q5 / SQ5</option>
+            <select id="model-select">
+                <option value="">Сначала марку</option>
             </select>
         </div>
         <div class="filter-group">
@@ -314,7 +325,12 @@
             <select>
                 <option>Все годы</option>
                 <option>2024</option>
-                <option>2020-2023</option>
+                <option>2023</option>
+                <option>2022</option>
+                <option>2021</option>
+                <option>2020</option>
+                <option>2015-2019</option>
+                <option>2010-2014</option>
             </select>
         </div>
         <div class="filter-actions">
@@ -364,9 +380,9 @@
         <div class="product-flex">
             <div class="big-preview" style="font-size: 50px;">🔩</div>
             <div style="flex: 1;">
-                <p>Высокопрочный крепеж класса 10.9 и 12.9. Удлиненные болты и секретки.</p>
+                <p>Высокопрочный крепеж класса 10.9 и 12.9. Удлиненные болты для проставок и декоративные гайки для кованых дисков.</p>
             </div>
-            <button class="btn-main" style="width:auto; padding: 15px 40px;">Весь крепеж</button>
+            <button class="btn-main" style="width:auto; padding: 15px 40px;">Весь каталог крепежа</button>
         </div>
     </section>
 </div>
@@ -377,15 +393,40 @@
 </footer>
 
 <script>
+    // Переключение темы
     function toggleTheme() {
         const body = document.body;
         const current = body.getAttribute('data-theme');
         body.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
     }
 
+    // Показ/скрытие фильтра
     function toggleFilter() {
         const filterBar = document.getElementById('filter-bar');
         filterBar.classList.toggle('active');
+    }
+
+    // Динамическое обновление моделей (для примера)
+    function updateModels() {
+        const brand = document.getElementById('brand-select').value;
+        const modelSelect = document.getElementById('model-select');
+        modelSelect.innerHTML = '<option value="">Загрузка...</option>';
+
+        const models = {
+            'audi': ['A3', 'A4', 'A6', 'Q5', 'Q7', 'RS6'],
+            'bmw': ['M3', 'M5', 'X5', 'X7', '3-Series', '5-Series'],
+            'mercedes': ['C-Class', 'E-Class', 'S-Class', 'G-Class', 'GLE'],
+            'toyota': ['Camry', 'Land Cruiser', 'RAV4', 'Corolla'],
+            'porsche': ['911', 'Cayenne', 'Panamera', 'Taycan']
+        };
+
+        setTimeout(() => {
+            if (models[brand]) {
+                modelSelect.innerHTML = models[brand].map(m => `<option>${m}</option>`).join('');
+            } else {
+                modelSelect.innerHTML = '<option value="">Модель не найдена</option>';
+            }
+        }, 300);
     }
 </script>
 
