@@ -2,101 +2,219 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Veltrix Shop</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veltrix | Precision Engineering</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #efeff4; color: #000; margin: 0; padding: 15px; padding-bottom: 80px; }
-        h2 { text-align: center; color: #333; }
-        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .card { background: white; border-radius: 12px; padding: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; }
-        .card img { width: 100%; border-radius: 8px; margin-bottom: 10px; }
-        .card h3 { font-size: 16px; margin: 5px 0; }
-        .card p { color: #007bff; font-weight: bold; margin: 5px 0; }
-        
-        /* Кнопка купить */
-        .btn-buy { background: #007bff; color: white; border: none; padding: 8px; width: 100%; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s; }
-        .btn-buy:active { transform: scale(0.95); opacity: 0.8; }
+        :root {
+            --dark-green: #0b422a;
+            --accent-orange: #ff8c00;
+            --light-bg: #f4f7f6;
+            --border-color: #d1d9d6;
+            --text-main: #1a1a1a;
+        }
 
-        /* Панель корзины внизу */
-        .cart-panel { position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); display: none; justify-content: space-between; align-items: center; border-radius: 15px 15px 0 0; }
-        .btn-checkout { background: #28a745; color: white; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        body {
+            font-family: 'Arial Narrow', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Верхняя плашка с лозунгом */
+        .top-banner {
+            background: #fff;
+            border: 2px solid var(--border-color);
+            margin: 20px auto;
+            max-width: 900px;
+            padding: 10px;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            font-size: 14px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .logo-img {
+            max-width: 200px;
+        }
+
+        /* Основные секции */
+        .main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .category-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 5px 5px 0px rgba(11, 66, 42, 0.1);
+        }
+
+        .category-title {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--dark-green);
+            margin-bottom: 20px;
+            border-bottom: 3px solid var(--accent-orange);
+            display: inline-block;
+        }
+
+        .product-display {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .main-img {
+            width: 150px;
+            height: 150px;
+            background: #eee;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+        }
+
+        .specs-list {
+            font-size: 14px;
+            list-style: none;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .specs-list li::before {
+            content: "• ";
+            color: var(--accent-orange);
+        }
+
+        /* Сетка иконок (размеры/стили) */
+        .sub-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .sub-item {
+            text-align: center;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .sub-circle {
+            width: 50px;
+            height: 50px;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            margin: 0 auto 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+        }
+
+        .action-btn {
+            background: var(--dark-green);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        /* Футер */
+        footer {
+            background: #fff;
+            margin-top: 50px;
+            padding: 30px;
+            border-top: 2px solid var(--dark-green);
+            text-align: center;
+            font-size: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .main-container { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
 
-    <h2>Veltrix Shop</h2>
-    <div class="product-grid" id="catalog"></div>
+<header>
+    <img src="https://raw.githubusercontent.com/anteri122/Veltrix_shop_app/main/photo_2026-03-24_02-25-17.jpg" alt="Veltrix" class="logo-img" onerror="this.style.display='none'; document.getElementById('alt-logo').style.display='block'">
+    <h1 id="alt-logo" style="display:none; color:var(--dark-green)">VELTRIX</h1>
+</header>
 
-    <div class="cart-panel" id="cart-panel">
-        <div>
-            <span style="display:block; font-size: 12px; color: #888;">Итого:</span>
-            <b id="total-price">0 ₽</b>
+<div class="top-banner">
+    Veltrix: Engineered for Precision. Forged for Strength.
+</div>
+
+<div class="main-container">
+    <div class="category-card">
+        <div class="category-title">Forged Wheels</div>
+        <div class="product-display">
+            <div class="main-img">🎡</div>
+            <ul class="specs-list">
+                <li>Ultra-Lightweight</li>
+                <li>Exceptional Strength</li>
+                <li>Custom Designs</li>
+                <li>Fitment Guarantee</li>
+            </ul>
         </div>
-        <button class="btn-checkout" onclick="checkout()">Оформить заказ</button>
+        <button class="action-btn">Configure Now</button>
+        
+        <div class="sub-grid">
+            <div class="sub-item"><div class="sub-circle">🔘</div>R18</div>
+            <div class="sub-item"><div class="sub-circle">🔘</div>R19</div>
+            <div class="sub-item"><div class="sub-circle">🔘</div>R20</div>
+            <div class="sub-item"><div class="sub-circle">🔘</div>R21</div>
+        </div>
     </div>
 
-    <script>
-        // Инициализация WebApp
-        const tg = window.Telegram.WebApp;
-        tg.expand(); // Расширяем на все окно
+    <div class="category-card">
+        <div class="category-title">Wheel Spacers</div>
+        <div class="product-display">
+            <div class="main-img">⚙️</div>
+            <ul class="specs-list">
+                <li>Perfect Stance</li>
+                <li>Improved Handling</li>
+                <li>Hubcentric Design</li>
+                <li>Safety Certified</li>
+            </ul>
+        </div>
+        <button class="action-btn">Select Size</button>
 
-        const products = [
-            {id: 1, name: "Смартфон X", price: 50000, img: "https://via.placeholder.com/150/007bff/ffffff?text=Phone"},
-            {id: 2, name: "Наушники Y", price: 5000, img: "https://via.placeholder.com/150/007bff/ffffff?text=Audio"},
-            {id: 3, name: "Чехол Z", price: 1500, img: "https://via.placeholder.com/150/007bff/ffffff?text=Case"},
-            {id: 4, name: "Часы Pro", price: 12000, img: "https://via.placeholder.com/150/007bff/ffffff?text=Watch"}
-        ];
+        <div class="sub-grid">
+            <div class="sub-item"><div class="sub-circle">15</div>15mm</div>
+            <div class="sub-item"><div class="sub-circle">20</div>20mm</div>
+            <div class="sub-item"><div class="sub-circle">25</div>25mm</div>
+            <div class="sub-item"><div class="sub-circle">30</div>30mm</div>
+        </div>
+    </div>
+</div>
 
-        let cart = [];
+<footer>
+    <p>Contact Info: +7 (999) 000-00-00 | Veltrix Engineering 2026</p>
+    <div style="font-size: 20px; margin-top: 10px; color: var(--dark-green);">Veltrix</div>
+</footer>
 
-        function renderProducts() {
-            const container = document.getElementById('catalog');
-            products.forEach(p => {
-                container.innerHTML += `
-                    <div class="card">
-                        <img src="${p.img}">
-                        <h3>${p.name}</h3>
-                        <p>${p.price.toLocaleString()} ₽</p>
-                        <button class="btn-buy" onclick="addToCart(${p.id})">В корзину</button>
-                    </div>`;
-            });
-        }
-
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            cart.push(product);
-            updateCartPanel();
-        }
-
-        function updateCartPanel() {
-            const panel = document.getElementById('cart-panel');
-            const totalText = document.getElementById('total-price');
-            
-            if (cart.length > 0) {
-                panel.style.display = 'flex';
-                const total = cart.reduce((sum, p) => sum + p.price, 0);
-                totalText.innerText = total.toLocaleString() + ' ₽';
-            } else {
-                panel.style.display = 'none';
-            }
-        }
-
-        function checkout() {
-            if (cart.length === 0) return;
-            
-            // Собираем данные для бота
-            const orderDetails = cart.map(p => p.name).join(", ");
-            const totalAmount = cart.reduce((sum, p) => sum + p.price, 0);
-            
-            const message = `Заказ: ${orderDetails} на сумму ${totalAmount} ₽`;
-            
-            // ОТПРАВКА ДАННЫХ В БОТ
-            tg.sendData(message); 
-            // Это закроет приложение и отправит текст боту в поле web_app_data
-        }
-
-        renderProducts();
-    </script>
 </body>
 </html>
