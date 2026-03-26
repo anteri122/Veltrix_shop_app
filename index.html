@@ -14,6 +14,7 @@
             --accent-orange: #ff8c00;
             --text: #1a1a1a;
             --border: #d1d9d6;
+            --filter-yellow: #f0d84d;
         }
 
         [data-theme="dark"] {
@@ -32,7 +33,7 @@
             transition: 0.3s;
         }
 
-        /* --- ШАПКА И МЕНЮ --- */
+        /* --- ШАПКА --- */
         header {
             background: var(--card-bg);
             padding: 0 5%;
@@ -44,9 +45,11 @@
             height: 80px;
         }
 
-        .logo { font-weight: 900; font-size: 26px; color: var(--dark-green); text-transform: uppercase; text-decoration: none; }
+        .logo-container { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo-img { height: 40px; }
+        .logo-text { font-weight: 900; font-size: 24px; color: var(--dark-green); text-transform: uppercase; }
 
-        .main-nav { display: flex; gap: 30px; height: 100%; }
+        .main-nav { display: flex; gap: 25px; height: 100%; }
         
         .nav-item { position: relative; display: flex; align-items: center; height: 100%; }
         
@@ -58,9 +61,10 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             transition: 0.3s;
+            cursor: pointer;
         }
 
-        /* MEGA MENU - Всплывающие окна */
+        /* MEGA MENU */
         .mega-menu {
             position: absolute;
             top: 100%;
@@ -73,10 +77,10 @@
             padding: 25px;
             display: flex;
             gap: 40px;
-            min-width: 500px;
+            min-width: 450px;
             opacity: 0;
             visibility: hidden;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 0.3s ease;
             z-index: 999;
         }
 
@@ -101,19 +105,67 @@
             text-decoration: none;
             font-size: 14px;
             margin-bottom: 10px;
+        }
+
+        .menu-column a:hover { color: var(--accent-orange); }
+
+        /* --- ГОРЯЧИЙ ФИЛЬТР (ГОРИЗОНТАЛЬНЫЙ) --- */
+        .filter-horizontal {
+            background: var(--filter-yellow);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s;
+            border-bottom: 0px solid var(--dark-green);
+        }
+
+        .filter-horizontal.active {
+            max-height: 250px;
+            padding: 25px 0;
+            border-bottom: 2px solid var(--dark-green);
+        }
+
+        .filter-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 0 20px;
+            align-items: flex-end;
+        }
+
+        .filter-group { display: flex; flex-direction: column; flex: 1; min-width: 150px; }
+        
+        .filter-group label {
+            font-size: 12px;
+            font-weight: 900;
+            color: #222;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .filter-group select {
+            padding: 12px;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .filter-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 900;
+            text-transform: uppercase;
+            cursor: pointer;
             transition: 0.2s;
         }
 
-        .menu-column a:hover { color: var(--accent-orange); padding-left: 5px; }
+        .btn-search { background: #222; color: white; }
+        .btn-reset { background: rgba(0,0,0,0.1); color: #222; }
 
-        .brand-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; }
-        .brand-item {
-            padding: 10px; border: 1px solid var(--border); border-radius: 8px;
-            text-align: center; cursor: pointer; font-weight: 600; font-size: 12px; transition: 0.2s;
-        }
-        .brand-item:hover { background: var(--accent-orange); color: white; border-color: var(--accent-orange); }
-
-        /* --- КОНТЕНТ --- */
+        /* --- КОНТЕНТ КАТАЛОГА --- */
         .banner {
             max-width: 1200px;
             margin: 20px auto;
@@ -123,7 +175,6 @@
             font-weight: bold;
             text-transform: uppercase;
             font-size: 13px;
-            letter-spacing: 1px;
         }
 
         .main-grid {
@@ -140,7 +191,6 @@
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 30px;
-            position: relative;
         }
 
         .card-header {
@@ -153,7 +203,7 @@
         }
 
         .product-flex { display: flex; gap: 30px; align-items: center; margin-bottom: 30px; }
-
+        
         .big-preview {
             width: 180px; height: 180px;
             background: rgba(0,0,0,0.03);
@@ -164,25 +214,11 @@
         .specs { list-style: none; padding: 0; font-size: 14px; line-height: 1.8; }
         .specs li::before { content: "▪ "; color: var(--accent-orange); font-weight: bold; }
 
-        .mini-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
-            border-top: 1px solid var(--border); padding-top: 20px;
-        }
-
-        .circle-icon {
-            width: 45px; height: 45px;
-            border: 1px solid var(--border); border-radius: 50%;
-            margin: 0 auto 8px;
-            display: flex; align-items: center; justify-content: center;
-            background: var(--bg); transition: 0.2s; cursor: pointer;
-        }
-        .circle-icon:hover { border-color: var(--accent-orange); transform: scale(1.1); }
-
-        .btn {
+        .btn-main {
             background: var(--dark-green);
             color: white; border: none; padding: 15px;
             border-radius: 6px; font-weight: bold; width: 100%;
-            text-transform: uppercase; cursor: pointer; margin-top: 20px;
+            text-transform: uppercase; cursor: pointer;
         }
 
         .theme-btn { background: var(--accent-orange); color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; }
@@ -190,14 +226,17 @@
         @media (max-width: 900px) {
             .main-nav { display: none; }
             .main-grid { grid-template-columns: 1fr; }
-            .product-flex { flex-direction: column; text-align: center; }
+            .filter-container { flex-direction: column; align-items: stretch; }
         }
     </style>
 </head>
 <body data-theme="light">
 
 <header>
-    <a href="#" class="logo">Veltrix</a>
+    <a href="#" class="logo-container">
+        <img src="photo_2026-03-24_02-25-17.jpg" alt="V" class="logo-img">
+        <span class="logo-text">Veltrix</span>
+    </a>
 
     <nav class="main-nav">
         <div class="nav-item">
@@ -206,45 +245,32 @@
                 <div class="menu-column">
                     <h4>Колеса</h4>
                     <a href="#">Кованые диски Forged</a>
-                    <a href="#">Центральные колпачки</a>
+                    <a href="#">Колпачки</a>
                 </div>
                 <div class="menu-column">
                     <h4>Подвеска</h4>
-                    <a href="#">Проставки сквозные</a>
-                    <a href="#">Адаптеры переходные</a>
-                </div>
-                <div class="menu-column">
-                    <h4>Крепеж</h4>
-                    <a href="#">Колесные болты</a>
-                    <a href="#">Гайки и секретки</a>
+                    <a href="#">Проставки</a>
+                    <a href="#">Адаптеры</a>
                 </div>
             </div>
         </div>
 
         <div class="nav-item">
-            <a href="#" class="nav-link">Подбор по авто ▾</a>
-            <div class="mega-menu" style="min-width: 400px; flex-direction: column;">
-                <div style="font-weight: bold; margin-bottom: 15px; font-size: 12px; color: var(--accent-orange);">ВЫБЕРИТЕ МАРКУ:</div>
-                <div class="brand-grid">
-                    <div class="brand-item">BMW</div>
-                    <div class="brand-item">Audi</div>
-                    <div class="brand-item">Mercedes</div>
-                    <div class="brand-item">Porsche</div>
-                    <div class="brand-item">Lexus</div>
-                    <div class="brand-item">Toyota</div>
-                </div>
-            </div>
+            <a class="nav-link" onclick="toggleFilter()">Подбор по авто 🔍</a>
+        </div>
+
+        <div class="nav-item">
+            <a href="#" class="nav-link">О компании</a>
         </div>
 
         <div class="nav-item">
             <a href="#" class="nav-link">Сервис ▾</a>
             <div class="mega-menu">
                 <div class="menu-column">
-                    <h4>Информация</h4>
-                    <a href="#">Доставка по РФ</a>
-                    <a href="#">Способы оплаты</a>
+                    <h4>Покупателю</h4>
+                    <a href="#">Доставка</a>
+                    <a href="#">Оплата</a>
                     <a href="#">Гарантия</a>
-                    <a href="#">Контакты</a>
                 </div>
             </div>
         </div>
@@ -255,6 +281,48 @@
         <button class="theme-btn" style="background:var(--dark-green)">🛒 0</button>
     </div>
 </header>
+
+<div id="filter-bar" class="filter-horizontal">
+    <div class="filter-container">
+        <div class="filter-group">
+            <label>Категория товаров</label>
+            <select>
+                <option>Колесный крепеж</option>
+                <option>Диски Forged</option>
+                <option>Проставки</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label>Выбор марки</label>
+            <select>
+                <option>Audi</option>
+                <option>BMW</option>
+                <option>Mercedes-Benz</option>
+                <option>Porsche</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label>Выбор модели</label>
+            <select>
+                <option>A3 / S3</option>
+                <option>A4 / RS4</option>
+                <option>Q5 / SQ5</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label>Год выпуска</label>
+            <select>
+                <option>Все годы</option>
+                <option>2024</option>
+                <option>2020-2023</option>
+            </select>
+        </div>
+        <div class="filter-actions">
+            <button class="filter-btn btn-search">Найти</button>
+            <button class="filter-btn btn-reset" onclick="toggleFilter()">Закрыть</button>
+        </div>
+    </div>
+</div>
 
 <div class="banner">
     VELTRIX: ENGINEERED FOR PRECISION. FORGED FOR STRENGTH.
@@ -272,13 +340,7 @@
                 <li>Fitment Guarantee</li>
             </ul>
         </div>
-        <div class="mini-grid">
-            <div class="mini-item"><div class="circle-icon">🔘</div>R18</div>
-            <div class="mini-item"><div class="circle-icon">🔘</div>R19</div>
-            <div class="mini-item"><div class="circle-icon">🔘</div>R20</div>
-            <div class="mini-item"><div class="circle-icon">🔘</div>R21</div>
-        </div>
-        <button class="btn">Configure Now</button>
+        <button class="btn-main">Перейти в каталог</button>
     </section>
 
     <section class="industrial-card">
@@ -289,43 +351,29 @@
                 <li>Perfect Stance & Fit</li>
                 <li>Improved Handling</li>
                 <li>Hubcentric Precision</li>
-                <li>Safety Certified 7075-T6</li>
+                <li>7075-T6 Alloy</li>
             </ul>
         </div>
-        <div class="mini-grid">
-            <div class="mini-item"><div class="circle-icon">12</div>12.5mm</div>
-            <div class="mini-item"><div class="circle-icon">15</div>15.0mm</div>
-            <div class="mini-item"><div class="circle-icon">20</div>20.0mm</div>
-            <div class="mini-item"><div class="circle-icon">25</div>25.0mm</div>
-        </div>
-        <button class="btn">Select Sizes</button>
+        <button class="btn-main">Выбрать размеры</button>
     </section>
 </main>
 
-<div class="full-width-section">
+<div class="full-width-section" style="max-width:1200px; margin: 0 auto 50px; padding: 0 20px;">
     <section class="industrial-card">
         <div class="card-header">Крепеж (Гайки и Болты)</div>
         <div class="product-flex">
             <div class="big-preview" style="font-size: 50px;">🔩</div>
             <div style="flex: 1;">
-                <p>Высокопрочный крепеж класса 10.9 и 12.9. Удлиненные болты для проставок и декоративные гайки для кованых дисков.</p>
-                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                    <div style="border-left: 3px solid var(--accent-orange); padding-left: 10px;">
-                        <b>Болты</b><br><small>М12х1.5 / М14х1.5 / М14х1.25</small>
-                    </div>
-                    <div style="border-left: 3px solid var(--accent-orange); padding-left: 10px;">
-                        <b>Гайки</b><br><small>Открытые / Закрытые / Секретки</small>
-                    </div>
-                </div>
+                <p>Высокопрочный крепеж класса 10.9 и 12.9. Удлиненные болты и секретки.</p>
             </div>
-            <button class="btn" style="width: auto; padding: 15px 40px;">Весь каталог крепежа</button>
+            <button class="btn-main" style="width:auto; padding: 15px 40px;">Весь крепеж</button>
         </div>
     </section>
 </div>
 
 <footer style="text-align: center; padding: 40px; color: #888; font-size: 12px; border-top: 1px solid var(--border);">
     <img src="photo_2026-03-24_02-25-17.jpg" alt="Veltrix" style="height: 30px; opacity: 0.5; margin-bottom: 10px;"><br>
-    © 2026 VELTRIX ENGINEERING. CONTACT: +7 (999) 000-00-00
+    © 2026 VELTRIX ENGINEERING.
 </footer>
 
 <script>
@@ -333,6 +381,11 @@
         const body = document.body;
         const current = body.getAttribute('data-theme');
         body.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+    }
+
+    function toggleFilter() {
+        const filterBar = document.getElementById('filter-bar');
+        filterBar.classList.toggle('active');
     }
 </script>
 
