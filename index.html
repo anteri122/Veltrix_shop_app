@@ -32,18 +32,88 @@
             transition: 0.3s;
         }
 
+        /* --- ШАПКА И МЕНЮ --- */
         header {
             background: var(--card-bg);
-            padding: 20px 5%;
+            padding: 0 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid var(--dark-green);
             position: sticky; top: 0; z-index: 1000;
+            height: 80px;
         }
 
-        .logo { font-weight: 900; font-size: 26px; color: var(--dark-green); text-transform: uppercase; }
+        .logo { font-weight: 900; font-size: 26px; color: var(--dark-green); text-transform: uppercase; text-decoration: none; }
 
+        .main-nav { display: flex; gap: 30px; height: 100%; }
+        
+        .nav-item { position: relative; display: flex; align-items: center; height: 100%; }
+        
+        .nav-link {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: 0.3s;
+        }
+
+        /* MEGA MENU - Всплывающие окна */
+        .mega-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(15px);
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            border-radius: 0 0 12px 12px;
+            padding: 25px;
+            display: flex;
+            gap: 40px;
+            min-width: 500px;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 999;
+        }
+
+        .nav-item:hover .mega-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .menu-column h4 {
+            color: var(--accent-orange);
+            font-size: 11px;
+            text-transform: uppercase;
+            margin: 0 0 15px 0;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 5px;
+        }
+
+        .menu-column a {
+            display: block;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 10px;
+            transition: 0.2s;
+        }
+
+        .menu-column a:hover { color: var(--accent-orange); padding-left: 5px; }
+
+        .brand-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; }
+        .brand-item {
+            padding: 10px; border: 1px solid var(--border); border-radius: 8px;
+            text-align: center; cursor: pointer; font-weight: 600; font-size: 12px; transition: 0.2s;
+        }
+        .brand-item:hover { background: var(--accent-orange); color: white; border-color: var(--accent-orange); }
+
+        /* --- КОНТЕНТ --- */
         .banner {
             max-width: 1200px;
             margin: 20px auto;
@@ -56,7 +126,6 @@
             letter-spacing: 1px;
         }
 
-        /* Главная сетка: Диски и Проставки */
         .main-grid {
             max-width: 1200px;
             margin: 0 auto;
@@ -64,13 +133,6 @@
             grid-template-columns: 1fr 1fr;
             gap: 25px;
             padding: 20px;
-        }
-
-        /* Нижняя секция: Крепеж */
-        .full-width-section {
-            max-width: 1200px;
-            margin: 0 auto 50px;
-            padding: 0 20px;
         }
 
         .industrial-card {
@@ -82,7 +144,7 @@
         }
 
         .card-header {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 900;
             color: var(--dark-green);
             margin-bottom: 20px;
@@ -90,50 +152,30 @@
             display: inline-block;
         }
 
-        .product-flex {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-            margin-bottom: 30px;
-        }
+        .product-flex { display: flex; gap: 30px; align-items: center; margin-bottom: 30px; }
 
         .big-preview {
-            width: 200px;
-            height: 200px;
+            width: 180px; height: 180px;
             background: rgba(0,0,0,0.03);
             border-radius: 10px;
-            display: flex; align-items: center; justify-content: center; font-size: 80px;
+            display: flex; align-items: center; justify-content: center; font-size: 70px;
         }
 
-        .specs { list-style: none; padding: 0; font-size: 15px; line-height: 1.8; }
+        .specs { list-style: none; padding: 0; font-size: 14px; line-height: 1.8; }
         .specs li::before { content: "▪ "; color: var(--accent-orange); font-weight: bold; }
 
-        /* Маленькие карточки выбора (Wheel Styles / Spacer Sizes) */
         .mini-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            border-top: 1px solid var(--border);
-            padding-top: 20px;
-        }
-
-        .mini-item {
-            text-align: center;
-            font-size: 11px;
-            font-weight: bold;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+            border-top: 1px solid var(--border); padding-top: 20px;
         }
 
         .circle-icon {
-            width: 50px; height: 50px;
-            border: 1px solid var(--border);
-            border-radius: 50%;
+            width: 45px; height: 45px;
+            border: 1px solid var(--border); border-radius: 50%;
             margin: 0 auto 8px;
             display: flex; align-items: center; justify-content: center;
-            background: var(--bg);
-            transition: 0.2s;
-            cursor: pointer;
+            background: var(--bg); transition: 0.2s; cursor: pointer;
         }
-
         .circle-icon:hover { border-color: var(--accent-orange); transform: scale(1.1); }
 
         .btn {
@@ -143,12 +185,10 @@
             text-transform: uppercase; cursor: pointer; margin-top: 20px;
         }
 
-        .theme-btn {
-            background: var(--accent-orange);
-            color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer;
-        }
+        .theme-btn { background: var(--accent-orange); color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; }
 
-        @media (max-width: 850px) {
+        @media (max-width: 900px) {
+            .main-nav { display: none; }
             .main-grid { grid-template-columns: 1fr; }
             .product-flex { flex-direction: column; text-align: center; }
         }
@@ -157,10 +197,62 @@
 <body data-theme="light">
 
 <header>
-    <div class="logo">Veltrix</div>
-    <div style="display:flex; gap:15px;">
-        <button class="theme-btn" onclick="toggleTheme()">🌓 Тема</button>
-        <button class="theme-btn" style="background:var(--dark-green)" onclick="alert('Корзина пока пуста')">🛒 0</button>
+    <a href="#" class="logo">Veltrix</a>
+
+    <nav class="main-nav">
+        <div class="nav-item">
+            <a href="#" class="nav-link">Продукция ▾</a>
+            <div class="mega-menu">
+                <div class="menu-column">
+                    <h4>Колеса</h4>
+                    <a href="#">Кованые диски Forged</a>
+                    <a href="#">Центральные колпачки</a>
+                </div>
+                <div class="menu-column">
+                    <h4>Подвеска</h4>
+                    <a href="#">Проставки сквозные</a>
+                    <a href="#">Адаптеры переходные</a>
+                </div>
+                <div class="menu-column">
+                    <h4>Крепеж</h4>
+                    <a href="#">Колесные болты</a>
+                    <a href="#">Гайки и секретки</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <a href="#" class="nav-link">Подбор по авто ▾</a>
+            <div class="mega-menu" style="min-width: 400px; flex-direction: column;">
+                <div style="font-weight: bold; margin-bottom: 15px; font-size: 12px; color: var(--accent-orange);">ВЫБЕРИТЕ МАРКУ:</div>
+                <div class="brand-grid">
+                    <div class="brand-item">BMW</div>
+                    <div class="brand-item">Audi</div>
+                    <div class="brand-item">Mercedes</div>
+                    <div class="brand-item">Porsche</div>
+                    <div class="brand-item">Lexus</div>
+                    <div class="brand-item">Toyota</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <a href="#" class="nav-link">Сервис ▾</a>
+            <div class="mega-menu">
+                <div class="menu-column">
+                    <h4>Информация</h4>
+                    <a href="#">Доставка по РФ</a>
+                    <a href="#">Способы оплаты</a>
+                    <a href="#">Гарантия</a>
+                    <a href="#">Контакты</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div style="display:flex; gap:10px;">
+        <button class="theme-btn" onclick="toggleTheme()">🌓</button>
+        <button class="theme-btn" style="background:var(--dark-green)">🛒 0</button>
     </div>
 </header>
 
@@ -177,7 +269,7 @@
                 <li>Ultra-Lightweight Alloy</li>
                 <li>Exceptional Strength</li>
                 <li>Custom Forged Designs</li>
-                <li>Premium Finish Options</li>
+                <li>Fitment Guarantee</li>
             </ul>
         </div>
         <div class="mini-grid">
