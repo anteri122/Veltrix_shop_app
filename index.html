@@ -3,231 +3,304 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Veltrix | Premium Forged Wheels & Spacers</title>
+    <title>Veltrix | Инженерная эстетика колес</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+
         :root {
-            --accent-orange: linear-gradient(135deg, #ff9d2d 0%, #ff6b00 100%);
-            --deep-green: #0b422a; /* Цвет из твоего логотипа */
-            --bg-light: #ffffff;
-            --card-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            --text-main: #1d1d1f;
-            --text-secondary: #86868b;
+            --dark: #0f1113;
+            --deep-green: #0b422a;
+            --accent-orange: linear-gradient(90deg, #ff8c00 0%, #ff5e00 100%);
+            --text-light: #f8fafc;
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-main);
+            background-color: var(--dark);
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
             margin: 0;
-            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
-        /* Шапка сайта */
+        /* Анимация появления */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Шапка */
         header {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: saturate(180%) blur(20px);
-            padding: 15px 40px;
+            padding: 20px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: rgba(15, 17, 19, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .logo-img {
-            width: 35px;
-            height: 35px;
-            background: var(--accent-orange);
-            border-radius: 8px;
-        }
-
-        .logo-text {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--deep-green);
-            letter-spacing: -0.5px;
-        }
-
-        /* Главный баннер */
-        .hero {
-            text-align: center;
-            padding: 80px 20px;
-            background: radial-gradient(circle at 50% 50%, #fdfdfd 0%, #f5f5f7 100%);
-        }
-
-        .hero h1 {
-            font-size: 48px;
-            font-weight: 800;
-            margin-bottom: 16px;
-            letter-spacing: -1px;
-            background: var(--deep-green);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 20px;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.5;
-        }
-
-        /* Сетка товаров */
-        .container {
-            max-width: 1200px;
-            margin: 60px auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 40px;
-        }
-
-        .product-card {
-            background: #fff;
-            border-radius: 24px;
-            padding: 24px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            text-align: center;
-            border: 1px solid #f2f2f2;
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--card-shadow);
-            border-color: #e5e5e5;
-        }
-
-        .product-image {
-            width: 100%;
-            height: 220px;
-            background: #fbfbfd;
-            border-radius: 18px;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 64px;
-            overflow: hidden;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            background: #f5f5f7;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--deep-green);
-            margin-bottom: 12px;
-        }
-
-        .product-name {
-            font-size: 22px;
-            font-weight: 700;
-            margin: 0 0 8px 0;
-        }
-
-        .product-price {
-            font-size: 18px;
-            color: var(--text-secondary);
-            margin-bottom: 24px;
-        }
-
-        .btn-buy {
-            background: var(--accent-orange);
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 600;
-            width: 100%;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .btn-buy:active {
-            transform: scale(0.96);
-        }
-
-        /* Корзина (нижняя плашка) */
-        .cart-bar {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--deep-green);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 40px;
+        .logo-box {
             display: flex;
             align-items: center;
             gap: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .logo-img { height: 45px; border-radius: 5px; }
+
+        .cart-btn {
+            background: none;
+            border: 1px solid var(--border);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
             cursor: pointer;
-            z-index: 1001;
+            transition: 0.3s;
+        }
+
+        .cart-btn:hover { background: white; color: black; }
+
+        /* Герой-секция */
+        .hero {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #1a2e24 0%, var(--dark) 80%);
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 8vw, 80px);
+            font-weight: 900;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero p {
+            color: #888;
+            max-width: 600px;
+            font-size: 1.2rem;
+            margin-top: 15px;
+            animation: fadeInUp 1s ease;
+        }
+
+        /* Сетка товаров */
+        .grid-container {
+            max-width: 1200px;
+            margin: -50px auto 100px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: #1a1d21;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 30px;
+            position: relative;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: #ff8c00;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .card::before {
+            content: "VELTRIX";
+            position: absolute;
+            top: -20px;
+            right: -10px;
+            font-size: 80px;
+            font-weight: 900;
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        .card-tag {
+            color: #ff8c00;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 250px;
+            background: #131518;
+            border-radius: 15px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .card h3 { font-size: 24px; margin: 0; }
+        .card-price { font-size: 28px; font-weight: 900; margin: 15px 0; color: #fff; }
+
+        .buy-button {
+            background: var(--accent-orange);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 18px;
+            border-radius: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .buy-button:hover { transform: scale(1.02); filter: brightness(1.1); }
+
+        /* Боковая корзина */
+        .sidebar {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 100%;
+            max-width: 380px;
+            height: 100%;
+            background: #0a0c0e;
+            box-shadow: -10px 0 50px rgba(0,0,0,0.5);
+            z-index: 2000;
+            transition: 0.4s ease;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        .sidebar.active { right: 0; }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            z-index: 1500;
+        }
+
+        footer {
+            padding: 60px 20px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: #555;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <a href="#" class="logo">
-        <div class="logo-img"></div>
-        <span class="logo-text">VELTRIX</span>
-    </a>
-    <nav style="display: flex; gap: 30px; font-weight: 500;">
-        <span style="cursor:pointer">Диски</span>
-        <span style="cursor:pointer">Проставки</span>
-        <span style="cursor:pointer">О нас</span>
-    </nav>
+    <div class="logo-box">
+        <img src="photo_2026-03-24_02-25-17.jpg" alt="Veltrix" class="logo-img" onerror="this.src='https://via.placeholder.com/45?text=V'">
+        <span style="font-weight: 900; letter-spacing: -1px; font-size: 24px;">VELTRIX</span>
+    </div>
+    <button class="cart-btn" onclick="toggleCart()">🛒 Корзина (<span id="count">0</span>)</button>
 </header>
 
 <section class="hero">
-    <h1>Veltrix Engineering</h1>
-    <p>Создаем идеальный вылет и непревзойденную прочность для вашего автомобиля.</p>
+    <h1>ENGINEERED STANCE</h1>
+    <p>Профессиональные колесные решения для тех, кто ценит точность и прочность. Кованые диски и проставки Veltrix.</p>
 </section>
 
-<div class="container">
-    <div class="product-card">
-        <span class="badge">В наличии</span>
-        <div class="product-image">⚙️</div>
-        <h3 class="product-name">Проставки 5х112</h3>
-        <p class="product-price">от 4 200 ₽</p>
-        <button class="btn-buy">Добавить в корзину</button>
+<div class="grid-container">
+    <div class="card">
+        <span class="card-tag">Wheel Spacers</span>
+        <div class="card-img">⚙️</div>
+        <h3>Проставки Veltrix Elite</h3>
+        <p style="color:#888">Сквозные проставки из авиационного алюминия. Идеальный вылет.</p>
+        <div class="card-price">4 900 ₽</div>
+        <button class="buy-button" onclick="addToCart('Проставки Veltrix Elite', 4900)">В корзину</button>
     </div>
 
-    <div class="product-card">
-        <span class="badge">Под заказ</span>
-        <div class="product-image">🌀</div>
-        <h3 class="product-name">Кованые диски VR-01</h3>
-        <p class="product-price">от 45 000 ₽ / шт.</p>
-        <button class="btn-buy">Конфигуратор</button>
+    <div class="card">
+        <span class="card-tag">Forged Wheels</span>
+        <div class="card-img">🎡</div>
+        <h3>Veltrix Forged R20</h3>
+        <p style="color:#888">Максимальная прочность при минимальном весе. Изготовление по вашим параметрам.</p>
+        <div class="card-price">55 000 ₽</div>
+        <button class="buy-button" onclick="addToCart('Veltrix Forged R20', 55000)">Заказать</button>
     </div>
 
-    <div class="product-card">
-        <span class="badge">Новинка</span>
-        <div class="product-image">🔩</div>
-        <h3 class="product-name">Болты усиленные</h3>
-        <p class="product-price">350 ₽ / шт.</p>
-        <button class="btn-buy">Добавить в корзину</button>
+    <div class="card">
+        <span class="card-tag">Hardware</span>
+        <div class="card-img">🔩</div>
+        <h3>Комплект болтов</h3>
+        <p style="color:#888">Высокопрочные болты класса 10.9 для надежной фиксации проставок.</p>
+        <div class="card-price">6 500 ₽</div>
+        <button class="buy-button" onclick="addToCart('Комплект болтов', 6500)">В корзину</button>
     </div>
 </div>
 
-<div class="cart-bar">
-    <span>🛒</span>
-    <span style="font-weight: 600;">Корзина: 0 ₽</span>
+<div class="overlay" id="overlay" onclick="toggleCart()"></div>
+<div class="sidebar" id="sidebar">
+    <h2 style="font-size: 32px; font-weight: 900;">КОРЗИНА</h2>
+    <div id="cart-list" style="margin: 40px 0; border-top: 1px solid #222;">
+        <p style="color:#555; margin-top: 20px;">Ваша корзина пуста...</p>
+    </div>
+    <div id="total" style="font-size: 24px; font-weight: bold; margin-bottom: 30px;">Итого: 0 ₽</div>
+    <button class="buy-button" style="background: white; color: black;" onclick="alert('Переходим к оплате...')">Оформить</button>
 </div>
+
+<footer>
+    <p>© 2026 VELTRIX ENGINEERING. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</p>
+    <p>КУЙ ПРАВИЛЬНО. СТАВЬ ШИРОКО.</p>
+</footer>
+
+<script>
+    let cart = [];
+
+    function addToCart(name, price) {
+        cart.push({name, price});
+        updateCart();
+        if(!document.getElementById('sidebar').classList.contains('active')) {
+            toggleCart();
+        }
+    }
+
+    function toggleCart() {
+        document.getElementById('sidebar').classList.toggle('active');
+        document.getElementById('overlay').style.display = 
+            document.getElementById('sidebar').classList.contains('active') ? 'block' : 'none';
+    }
+
+    function updateCart() {
+        document.getElementById('count').innerText = cart.length;
+        const list = document.getElementById('cart-list');
+        const total = document.getElementById('total');
+        
+        if(cart.length === 0) {
+            list.innerHTML = '<p style="color:#555; margin-top: 20px;">Ваша корзина пуста...</p>';
+            total.innerText = 'Итого: 0 ₽';
+            return;
+        }
+
+        list.innerHTML = cart.map((item, i) => `
+            <div style="display:flex; justify-content:space-between; margin: 20px 0; font-size: 14px;">
+                <span>${item.name}</span>
+                <b>${item.price.toLocaleString()} ₽</b>
+            </div>
+        `).join('');
+
+        const sum = cart.reduce((a, b) => a + b.price, 0);
+        total.innerText = `Итого: ${sum.toLocaleString()} ₽`;
+    }
+</script>
 
 </body>
 </html>
